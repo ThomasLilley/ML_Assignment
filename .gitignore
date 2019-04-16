@@ -1,2 +1,5 @@
 venv/
 .idea/
+digits-train-5000/
+digits-validation-1000/
+__pycache__/
