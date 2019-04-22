@@ -62,14 +62,14 @@ def task1():
         print("--------------")
         a = input("Begin Prediction? y/n :")
         if a == 'y' or a == 'Y':
-            predict(te_images, te_labels)
+            predict(t_images, t_labels, v_images, v_labels, te_images, te_labels)
             flag = False
         elif a == 'n' or a == 'N':
             flag = False
         else:
             print("Invalid input \n")
 
-    predict()
+
     # flag = True
     # while flag:
     #     a = input("Predict (E)")
@@ -111,9 +111,6 @@ def train(t_images, t_labels, v_images, v_labels, te_images, te_labels):
         print("Training ", str(names[i]))
         current_classifier = classifiers[i]
         current_classifier.fit(t_images, t_labels)
-        accuracy = classifiers[i].score(v_images, v_labels)
-        print(str(names[i]), " score = ", str(accuracy*100), "%")
-
         print("Saving model...\n")
         try:
             ext = ".pkl"
@@ -126,7 +123,7 @@ def train(t_images, t_labels, v_images, v_labels, te_images, te_labels):
         i += 1
 
 
-def predict(test_im, test_lab):
+def predict(t_images, t_labels, v_images, v_labels, te_images, te_labels):
     ext = ".pkl"
     flag = True
     while flag:
@@ -150,9 +147,12 @@ def predict(test_im, test_lab):
                 pickle_model = pickle.load(file)
 
             # Calculate the accuracy score and predict target values
-            score = pickle_model.score(test_im)
-            print("Test score: {0:.2f} %".format(100 * score))
-            out = pickle_model.predict(test_im)
+            score = pickle_model.score(te_images, te_labels)
+            print("Test score: ", (score*100))
+            out = pickle_model.predict(te_images)
+
+            for i in range(0, len(out)):
+                print(out[i], te_labels[i])
         else:
             print("invalid input")
 
