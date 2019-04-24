@@ -5,4 +5,5 @@ digits-validation-1000/
 digits-test/
 __pycache__/
 
+.txt
 .pkl
