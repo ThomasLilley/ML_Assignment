@@ -5,6 +5,7 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import AdaBoostClassifier
 from sklearn.naive_bayes import GaussianNB
 from sklearn.neural_network import MLPClassifier
+from sklearn.metrics import classification_report
 from matplotlib.image import imread
 import numpy as np
 import glob
@@ -138,6 +139,8 @@ def predict(v_images, v_labels):
                 # Calculate the accuracy score and predict target values
                 score = pickle_model.score(v_images, v_labels)
                 print("Test score: ", (score*100), "%")
+                p_labels = pickle_model.predict(v_images)
+                print(classification_report(v_labels, p_labels))
 
             elif a == 9:
                 for i in range(0, len(names)):
@@ -148,6 +151,10 @@ def predict(v_images, v_labels):
                         pickle_model = pickle.load(file)
                     score = pickle_model.score(v_images, v_labels)
                     print("Test score: ", (score * 100), "%")
+
+                    p_labels = pickle_model.predict(v_images)
+                    print(classification_report(v_labels, p_labels))
+
             elif a == 0:
                 flag = False
         else:
